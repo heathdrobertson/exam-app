@@ -205,3 +205,29 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Virtual environment
+venv/
+.env
+*.pyc
+__pycache__/
+
+# Git 'git filter-repo --replace-text expressions.txt'
+expressions.txt
+
+# Django secrets
+exam_app/settings/local.py
+exam_app/settings/production.py
+db.sqlite3  # Local SQLite DB (if using; you're on PostgreSQL, but good practice)
+
+# Logs and temp files
+*.log
+staticfiles/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/settings.json

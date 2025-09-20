@@ -17,8 +17,8 @@
         {% endfor %}
     {% endif %}
     <nav class="navbar navbar-light bg-light mb-4">
-        <a class="navbar-brand" href="{% url 'exam_list' %}">Home</a>
-        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+        <a class="navbar-brand" href="{% url 'exam_list' %}"><i class="bi bi-house"></i> Home</a>
+        <a class="nav-link" href="{% url 'logout' %}"><i class="bi bi-box-arrow-right"></i> Logout</a>
     </nav>
     <div class="alert alert-info">
         <p><strong>Instructions:</strong> This exam tests your understanding of basic Linux commands. Answer all questions. You have 30 minutes. Good luck!</p>
@@ -57,7 +57,9 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary" onclick="document.querySelector('form').submit();">Submit</button>
+                        <button type="submit" class="btn btn-primary" onclick="document.querySelector('form').submit();><i class="bi bi-check-circle"></i> Submit Exam</button>
+
+
                     </div>
                 </div>
             </div>

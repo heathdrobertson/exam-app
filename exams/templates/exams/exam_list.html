@@ -4,42 +4,49 @@
 <head>
     <title>Exam List</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         body { font-size: 18px; font-family: 'Comic Sans MS', cursive, sans-serif; background-color: #f0f8ff; }
         h1 { color: #4CAF50; }
+        .exam-card { border-left: 5px solid #4CAF50; }
+        .btn { font-size: 16px; }
     </style>
 </head>
 <body class="container mt-4">
     <nav class="navbar navbar-light bg-light mb-4">
-        <a class="navbar-brand" href="{% url 'exam_list' %}">Home</a>
+        <a class="navbar-brand" href="{% url 'exam_list' %}"><i class="bi bi-house"></i> Home</a>
         {% if user.is_authenticated %}
-            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+            <a class="nav-link" href="{% url 'logout' %}"><i class="bi bi-box-arrow-right"></i> Logout</a>
         {% else %}
-            <a class="nav-link" href="{% url 'login' %}">Login</a>
+            <a class="nav-link" href="{% url 'login' %}"><i class="bi bi-box-arrow-in-right"></i> Login</a>
         {% endif %}
     </nav>
-    <h1 class="display-4">Welcome to Your Linux Exam!</h1>
+    <h1 class="display-4">Welcome to Your Linux Exam! <i class="bi bi-emoji-smile"></i></h1>
     <p class="lead">Choose an exam to start learning about Linux commands!</p>
     {% if user.is_authenticated %}
-        <a href="{% url 'exam_create' %}" class="btn btn-primary mb-3">Create a New Exam</a>
+        <a href="{% url 'exam_create' %}" class="btn btn-primary mb-3"><i class="bi bi-plus-circle"></i> Create a New Exam</a>
     {% else %}
         <p>Please <a href="{% url 'login' %}">log in</a> to take or create exams.</p>
     {% endif %}
-    <ul class="list-group">
+    <div class="row">
     {% for exam in exams %}
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-            <div>
-                <h5>{{ exam.title }}</h5>
-                <p>{{ exam.description }}</p>
+        <div class="col-md-6 mb-3">
+            <div class="card exam-card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ exam.title }}</h5>
+                    <p class="card-text">{{ exam.description }}</p>
+                    <div class="btn-group">
+                        <a href="{% url 'exam_detail' exam.id %}" class="btn btn-info btn-sm"><i class="bi bi-eye"></i> Details</a>
+                        <a href="{% url 'take_exam' exam.id %}" class="btn btn-success btn-sm"><i class="bi bi-play-circle"></i> Take Exam</a>
+                    </div>
+                </div>
             </div>
-            <div>
-                <a href="{% url 'exam_detail' exam.id %}" class="btn btn-sm btn-info">Details</a>
-                <a href="{% url 'take_exam' exam.id %}" class="btn btn-sm btn-success">Take Exam</a>
-            </div>
-        </li>
+        </div>
     {% empty %}
-        <li class="list-group-item">No exams available yet!</li>
+        <div class="col-12">
+            <div class="alert alert-warning">No exams available yet!</div>
+        </div>
     {% endfor %}
-    </ul>
+    </div>
 </body>
 </html>

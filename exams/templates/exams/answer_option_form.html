@@ -1,17 +1,39 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Add Answer to {{ question.text }}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="container mt-4">
-    <h1>Add Answer to {{ question.text }}</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Save</button>
-    </form>
-    <a href="{% url 'exam_detail' exam.id %}" class="btn btn-secondary">Back to Exam</a>
-</body>
-</html>
+{% extends 'exams/base.html' %}
+
+{% block title %}Add Answer Option{% endblock %}
+
+{% block content %}
+    <h1 class="display-4"><i class="bi bi-plus-circle"></i> Add Answer Option to "{{ question.text|truncatewords:5 }}"</h1>
+    <p class="lead">Add an option for this question. Mark one as correct!</p>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="card exam-card">
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="{{ form.text.id_for_label }}" class="form-label"><i class="bi bi-card-text"></i> Answer Text</label>
+                    {{ form.text|add_class:"form-control form-control-lg" }}
+                    {% if form.text.errors %}
+                        <div class="invalid-feedback d-block">{{ form.text.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="mb-3 form-check">
+                    {{ form.is_correct|add_class:"form-check-input" }}
+                    <label class="form-check-label" for="{{ form.is_correct.id_for_label }}"><i class="bi bi-check-circle"></i> Is Correct?</label>
+                    {% if form.is_correct.errors %}
+                        <div class="invalid-feedback d-block">{{ form.is_correct.errors }}</div>
+                    {% endif %}
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg"><i class="bi bi-save"></i> Save Answer Option</button>
+            </form>
+        </div>
+    </div>
+    <a href="{% url 'exam_detail' question.exam.id %}" class="btn btn-secondary mt-3"><i class="bi bi-arrow-left"></i> Back to Exam Details</a>
+{% endblock %}

@@ -1,28 +1,44 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{ exam.title }}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    <h1>{{ exam.title }}</h1>
-    <p>{{ exam.description }}</p>
-    <h2>Questions</h2>
-    <a href="{% url 'question_create' exam.id %}">Add Question</a>
-    <ul>
-    {% for question in questions %}
-    <li>
-        {{ question.text }} (Type: {{ question.question_type }})
-        {% if question.question_type == 'mcq' or question.question_type == 'tf' %}
-            <a href="{% url 'answer_option_create' question.exam.id question.id %}">Add Answer Option</a>
-        {% endif %}
-    </li>
-{% empty %}
-    <li>No questions available.</li>
-{% endfor %}
-</ul>
+{% extends 'exams/base.html' %}
 
-    <a href="{% url 'exam_list' %}">Back to Exam List</a>
-</body>
-</html>
+{% block title %}{{ exam.title }} Details{% endblock %}
+
+{% block content %}
+    <h1 class="display-4"><i class="bi bi-book"></i> {{ exam.title }}</h1>
+    <p class="lead">{{ exam.description }}</p>
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card exam-card">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="bi bi-info-circle"></i> Exam Info</h5>
+                    <p><strong>Created by:</strong> {{ exam.created_by.username }}</p>
+                    <p><strong>Active:</strong> {{ exam.active|yesno:"Yes,No" }}</p>
+                    <p><strong>Questions:</strong> {{ questions.count }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <a href="{% url 'question_create' exam.id %}" class="btn btn-primary btn-lg d-block"><i class="bi bi-plus-circle"></i> Add Question</a>
+        </div>
+    </div>
+    <h2 class="mb-3"><i class="bi bi-list-ul"></i> Questions</h2>
+    {% if questions %}
+        <div class="row">
+        {% for question in questions %}
+            <div class="col-md-6 mb-3">
+                <div class="card exam-card">
+                    <div class="card-body">
+                        <h6 class="card-title"><i class="bi bi-question-circle"></i> {{ question.text|truncatewords:8 }}</h6>
+                        <p class="card-text small"><strong>Type:</strong> {{ question.get_question_type_display }} | <strong>Order:</strong> {{ question.order }}</p>
+                        {% if question.question_type == 'mcq' or question.question_type == 'tf' %}
+                            <a href="{% url 'answer_option_create' exam.id question.id %}" class="btn btn-sm btn-outline-primary"><i class="bi bi-plus"></i> Add Option</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info"><i class="bi bi-exclamation-circle"></i> No questions yet. Add one to get started!</div>
+    {% endif %}
+    <a href="{% url 'exam_list' %}" class="btn btn-secondary mt-3"><i class="bi bi-arrow-left"></i> Back to Exam List</a>
+{% endblock %}

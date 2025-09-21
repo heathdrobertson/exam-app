@@ -19,6 +19,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env(DEBUG=(bool, True))
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))  # Explicit path
 
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -28,12 +30,15 @@ SECRET_KEY = env('SECRET_KEY')
 
 # Force HTTPS
 SECURE_SSL_REDIRECT = True
-
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# HSTS Settings (only for production/HTTPS)
+if not DEBUG:
+    SECURE_HSTS_SECONDS = 31536000  # 1 year in seconds (recommended for production)
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # Apply to subdomains if you have any
+    SECURE_HSTS_PRELOAD = True  # Allow preload submission to browsers (optional, for high-security sites)
+
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['192.168.132.182']) 
 

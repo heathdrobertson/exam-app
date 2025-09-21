@@ -129,5 +129,4 @@ def logout_view(request):
         messages.success(request, 'You have been logged out successfully!')
         return redirect('exam_list')
     else:
-        # For GET, redirect to a logout confirmation page or handle gracefully
-        return redirect('exam_list')  # Or render a template: return render(request, 'exams/logout_confirm.html')
+        return render(request, 'exams/logout_confirm.html')

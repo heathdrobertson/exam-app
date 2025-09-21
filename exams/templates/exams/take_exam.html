@@ -1,3 +1,4 @@
+{% load static exam_tags %}
 {% extends 'exams/base.html' %}
 
 {% block title %}Take {{ exam.title }}{% endblock %}
@@ -14,7 +15,7 @@
             <div class="mb-3">
                 <h3><i class="bi bi-question-circle"></i> Question {{ forloop.counter }} of {{ questions.count }}: {{ question.text }} ({{ question.get_question_type_display }})</h3>
                 <div class="progress mb-3">
-                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ forloop.counter0|div:questions.count|mul:100 }}%"></div>
+                <div class="progress-bar" role="progressbar" style="width: {{ forloop.counter0|div:questions.count|mul:100 }}%"></div>
                 </div>
                 {% if question.question_type == 'mcq' or question.question_type == 'tf' %}
                     {% for option in question.answeroption_set.all %}

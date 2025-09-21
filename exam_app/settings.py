@@ -13,13 +13,11 @@ import environ
 import os
 from pathlib import Path
 
-env = environ.Env(
-    DEBUG=(bool, True)
-)
-environ.Env.read_env()  # Reads .env file
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+env = environ.Env(DEBUG=(bool, True))
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))  # Explicit path
 
 
 # Quick-start development settings - unsuitable for production
@@ -28,11 +26,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY')
 
+# Force HTTPS
+SECURE_SSL_REDIRECT = True
+
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.132.182']
-
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['192.168.132.182']) 
 
 # Application definition
 

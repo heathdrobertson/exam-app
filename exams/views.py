@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 from django.contrib import messages
 from django.utils import timezone
+from django.views.decorators.csrf import csrf_protect
 from .models import Exam, Question, AnswerOption, UserAnswer, Score
 from .forms import ExamForm, QuestionForm, AnswerOptionForm, UserAnswerForm
+
 
 def exam_list(request):
     exams = Exam.objects.filter(active=True)
@@ -118,3 +121,13 @@ def grade_short_answers(request, exam_id):
             )
         return redirect('exam_results', exam_id=exam.id)
     return render(request, 'exams/grade_short_answers.html', {'exam': exam, 'answers': answers})
+
+@csrf_protect
+def logout_view(request):
+    if request.method == 'POST':
+        logout(request)
+        messages.success(request, 'You have been logged out successfully!')
+        return redirect('exam_list')
+    else:
+        # For GET, redirect to a logout confirmation page or handle gracefully
+        return redirect('exam_list')  # Or render a template: return render(request, 'exams/logout_confirm.html')

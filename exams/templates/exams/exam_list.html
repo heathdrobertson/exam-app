@@ -16,7 +16,10 @@
     <nav class="navbar navbar-light bg-light mb-4">
         <a class="navbar-brand" href="{% url 'exam_list' %}"><i class="bi bi-house"></i> Home</a>
         {% if user.is_authenticated %}
-            <a class="nav-link" href="{% url 'logout' %}"><i class="bi bi-box-arrow-right"></i> Logout</a>
+            <form method="post" action="{% url 'logout' %}" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" class="nav-link btn btn-link p-0 border-0" style="background: none;"><i class="bi bi-box-arrow-right"></i> Logout</button>
+            </form>
         {% else %}
             <a class="nav-link" href="{% url 'login' %}"><i class="bi bi-box-arrow-in-right"></i> Login</a>
         {% endif %}

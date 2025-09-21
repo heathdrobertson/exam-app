@@ -4,6 +4,7 @@ from django.contrib.auth import logout
 from django.contrib import messages
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.http import require_http_methods
 from .models import Exam, Question, AnswerOption, UserAnswer, Score
 from .forms import ExamForm, QuestionForm, AnswerOptionForm, UserAnswerForm
 
@@ -122,11 +123,12 @@ def grade_short_answers(request, exam_id):
         return redirect('exam_results', exam_id=exam.id)
     return render(request, 'exams/grade_short_answers.html', {'exam': exam, 'answers': answers})
 
+@require_http_methods(["GET", "POST"])
 @csrf_protect
 def logout_view(request):
     if request.method == 'POST':
         logout(request)
         messages.success(request, 'You have been logged out successfully!')
         return redirect('exam_list')
-    else:
+    else:  # GET
         return render(request, 'exams/logout_confirm.html')

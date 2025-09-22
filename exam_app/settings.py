@@ -69,8 +69,8 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'exam_app.urls'
 
 # Authentication redirects
-LOGIN_REDIRECT_URL = '/exams/'  # Redirect after login to exam list
 LOGOUT_REDIRECT_URL = '/exams/'  # Redirect after logout to exam list
+LOGIN_REDIRECT_URL = '/'
 
 TEMPLATES = [
     {

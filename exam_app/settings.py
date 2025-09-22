@@ -15,7 +15,6 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))  # Explicit path
 env = environ.Env(DEBUG=(bool, True))
 
@@ -29,17 +28,17 @@ DEBUG = env('DEBUG')
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY')
 
-# Force HTTPS
-SECURE_SSL_REDIRECT = True
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
 
 # HSTS Settings (only for production/HTTPS)
 if not DEBUG:
     SECURE_HSTS_SECONDS = 31536000  # 1 year in seconds (recommended for production)
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # Apply to subdomains if you have any
     SECURE_HSTS_PRELOAD = True  # Allow preload submission to browsers (optional, for high-security sites)
+    # Force HTTPS
+    SECURE_SSL_REDIRECT = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
 
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['192.168.132.182']) 

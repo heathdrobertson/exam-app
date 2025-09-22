@@ -9,10 +9,6 @@ from .models import Exam, Question, AnswerOption, UserAnswer, Score
 from .forms import ExamForm, QuestionForm, AnswerOptionForm, UserAnswerForm
 
 
-def exam_splash(request):
-    exams = Exam.objects.filter(active=True)
-    return render(request, 'exams/splash.html', {'splash': exams})
-
 def exam_list(request):
     exams = Exam.objects.filter(active=True)
     return render(request, 'exams/exam_list.html', {'exams': exams})
@@ -133,6 +129,6 @@ def logout_view(request):
     if request.method == 'POST':
         logout(request)
         messages.success(request, 'You have been logged out successfully!')
-        return redirect('exam_list')
+        return redirect('exams')
     else:  # GET
         return render(request, 'exams/logout_confirm.html')

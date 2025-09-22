@@ -23,7 +23,6 @@ from django.contrib.auth import views as auth_views
 from exams import views  # Import splash view
 
 urlpatterns = [
-    path('', views.splash, name='splash'),  # Root to splash page
     path('admin/', admin.site.urls),
     path('exams/', include('exams.urls')),
     path('login/', auth_views.LoginView.as_view(template_name='exams/login.html'), name='login'),

@@ -11,7 +11,7 @@ from .forms import ExamForm, QuestionForm, AnswerOptionForm, UserAnswerForm
 
 def exam_splash(request):
     exams = Exam.objects.filter(active=True)
-    return render(request, '/exam_splash.html', {'splash': exams})
+    return render(request, 'exams/splash.html', {'splash': exams})
 
 def exam_list(request):
     exams = Exam.objects.filter(active=True)

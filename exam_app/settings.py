@@ -31,6 +31,9 @@ SECRET_KEY = env('SECRET_KEY')
 
 # HSTS Settings (only for production/HTTPS)
 if not DEBUG:
+    CSRF_TRUSTED_ORIGINS = [
+        'https://192.168.132.182',
+    ]
     SECURE_HSTS_SECONDS = 31536000  # 1 year in seconds (recommended for production)
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # Apply to subdomains if you have any
     SECURE_HSTS_PRELOAD = True  # Allow preload submission to browsers (optional, for high-security sites)

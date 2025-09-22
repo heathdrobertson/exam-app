@@ -132,3 +132,8 @@ def logout_view(request):
         return redirect('exams')
     else:  # GET
         return render(request, 'exams/logout_confirm.html')
+
+def splash(request):
+    if request.user.is_authenticated:
+        return redirect('exams')  # Redirect logged-in users to exam list
+    return render(request, 'exams/splash.html')

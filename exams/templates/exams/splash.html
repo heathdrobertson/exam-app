@@ -17,7 +17,7 @@
                         <p class="text-center mb-4">Log in to take exams, view your progress, or create new ones for your next learning journey—like Raspberry Pi builds or Bryson's cosmic wonders!</p>
                         <div class="d-grid gap-3 col-8 mx-auto">
                             <a href="{% url 'login' %}" class="btn btn-primary btn-lg"><i class="bi bi-box-arrow-in-right"></i> Log In & Get Started</a>
-                            <a href="{% url 'exam_list' %}" class="btn btn-outline-secondary btn-lg"><i class="bi bi-eye"></i> Browse Exams</a>
+                            <a href="{% url 'exams' %}" class="btn btn-outline-secondary btn-lg"><i class="bi bi-eye"></i> Browse Exams</a>
                             <a href="{% url 'exam_create' %}" class="btn btn-success btn-lg" {% if not user.is_authenticated %}disabled{% endif %}><i class="bi bi-plus-circle"></i> Create New Exam</a>
                         </div>
                     </div>

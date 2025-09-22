@@ -12,5 +12,5 @@
     {% empty %}
         <div class="alert alert-warning"><i class="bi bi-exclamation-triangle"></i> No scores yet. Take the exam to see results!</div>
     {% endfor %}
-    <a href="{% url 'exam_list' %}" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Back to Exams</a>
+    <a href="{% url 'exams' %}" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Back to Exams</a>
 {% endblock %}
